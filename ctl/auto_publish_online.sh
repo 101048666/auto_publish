@@ -53,6 +53,7 @@ do
             $tools_dir/ssh_use.sh $ip $user $pass "cd $vir_pub/ && ln -s $version webapps"
             $tools_dir/ssh_use.sh $ip $user $pass "docker restart $vir_code"
             if [[ "${sleeptime}x" = "0x" ]];then
+                echo "report=auto_publish at $p_name on $ip:$vir_pub/webapps  ok" >> $remote_l_dir/project_package/$p_name/${p_name}_${version}.ini
                 continue
             fi
             sleep ${sleeptime}m
