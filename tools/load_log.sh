@@ -5,13 +5,14 @@
 #Author: WangYue
 #Mail: 101048666@qq.com
 #Created Time: 2017年05月22日 星期一 19时59分30秒
+#set -o xtrace
+
 
 p_name=$1
-num=$2
-if [ ! -n $num ];then
-    num=200
+num=10 
+if [[ "$2"x != x ]];then
+    num=$2    
 fi
-
 
 temp_dir=$(cd `dirname $0`; pwd)
 tools_dir=$temp_dir
@@ -24,9 +25,9 @@ do
     ip=`echo $line |awk -F ':' '{print $1}'`
     user=`echo $line | awk -F ':' '{print $3}'`
     pass=`echo $line | awk -F ':' '{print $4}'`
-    dir=`echo $line | awk -F ':' '{print $2}'`
-
+    temp_dir=`echo $line | awk -F ':' '{print $2}'`
+    dir=`echo $temp_dir | awk -F '\r' '{print $1}'`
     $tools_dir/put_log.sh "it is $p_name : $ip"
-    $tools_dir/ssh_use.sh $ip $user $pass "tail -${num} $dir/logs/catalina.out" | $tools_dir/put_log.sh
+    $tools_dir/ssh_use.sh $ip $user $pass "tail -${num} ${dir}/logs/catalina.out" | $tools_dir/put_log.sh
 done < temp_jj_file
 rm -rf temp_jj_file

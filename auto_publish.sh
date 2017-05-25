@@ -10,6 +10,7 @@
 comand=$1
 project=$2
 version=$3 
+sleeptime=$4
 temp_dir=$(cd `dirname $0`; pwd)
 tools_dir=$(cd $temp_dir/tools;pwd)
 config=$temp_dir/auto_publish_config.conf
@@ -31,7 +32,7 @@ case $comand in
      echo $comand
      ;;
     "online")
-     $temp_dir/ctl/auto_publish_online.sh $project $version
+     $temp_dir/ctl/auto_publish_online.sh $project $version $sleeptime
      ;;
     "help")
      echo $comand

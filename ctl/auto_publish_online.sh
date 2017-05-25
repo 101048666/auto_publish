@@ -17,6 +17,10 @@ temp_file_vir=$tools_dir/temp_file_vir
 p_name=$1
 version=$2
 
+sleeptime=0
+if [[ "$3"x != x ]];then
+    sleeptime=$3
+fi
 
 $tools_dir/put_log.sh "get phy_machine info from db to temp file $temp_file_phy_m"
 
@@ -34,7 +38,7 @@ do
     vm_type=`echo $line | awk -F ':' '{print $7}'`
     phy_mid=`echo $line | awk -F ':' '{print $8}'`
     $tools_dir/put_log.sh "$ip,$user,$pass,$port,$project_l_dir,$remote_l_dir,$vm_type"
-    if [ -f $remote_l_dir/project_package/$p_name/${p_name}_${version}.war ];then
+    if [ -f $remote_l_dir/project_package/$p_name/${p_name}_${version}.war ] && [ -f $remote_l_dir/project_package/$p_name/${p_name}_${version}.ini ];then
         $tools_dir/put_log.sh  "select concat(phy_machine_id,':',ip,':',vir_machine_code,':',publish_dir) from virtual_machine where phy_machine_id = '${phy_mid}' and name like '%${p_name}%';"
         $tools_dir/mysql_use.sh "select concat(phy_machine_id,':',ip,':',vir_machine_code,':',publish_dir) from virtual_machine where phy_machine_id = '${phy_mid}' and name like '%${p_name}%';" > $temp_file_vir
         while read line
@@ -48,13 +52,23 @@ do
             $tools_dir/ssh_use.sh $ip $user $pass "rm -rf $vir_pub/webapps"
             $tools_dir/ssh_use.sh $ip $user $pass "cd $vir_pub/ && ln -s $version webapps"
             $tools_dir/ssh_use.sh $ip $user $pass "docker restart $vir_code"
+            if [[ "${sleeptime}x" = "0x" ]];then
+                continue
+            fi
+            sleep ${sleeptime}m
+            echo "report=auto_publish at $p_name on $ip:$vir_pub/webapps  ok" >> $remote_l_dir/project_package/$p_name/${p_name}_${version}.ini
         done < $temp_file_vir
         rm -rf $temp_file_vir
     else
-        $tools_dir/put_log.sh "$remote_l_dir/$p_name/${p_name}_${version}.war is not exit"
+        $tools_dir/put_log.sh "$remote_l_dir/$p_name/${p_name}_${version}.war or $remote_l_dir/$p_name/${p_name}_${version}.ini is not exit"
         rm -rf $temp_file_vir
         break
     fi
 done < $temp_file_phy_m
 
 rm -rf $temp_file_phy_m
+
+email=`$tools_dir/make_mail.sh`
+
+$tools_dir/sendEmail.sh $p_name $email
+rm -rf $email

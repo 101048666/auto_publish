@@ -1,0 +1,32 @@
+<html>
+<head>
+<META http-equiv=Content-Type content=text/html; charset=utf-8>
+<title>auto_publish</title>
+<style>
+body{font-size:11pt;}
+a{text-decoration:none;}
+</style>
+
+</head>
+<body topmargin=2 leftmargin=2 bgcolor=#ffffff>
+<base target=_blank>
+<table cellspacing=0 cellpadding=0 width=1000 height=200 border=5 style="" align="" bordercolor="">
+<Tr><Td>auto_publish_result:</td><td></td></tr>
+<tr><td>应用：</td><td>study</td></tr><!--p_name -->
+<tr><td>版本：</td><td>v1.0.5</td></tr><!--version -->
+<tr><td>产品经理：</td><td>赵静、白亚楠</td></tr><!--product manager-->
+<tr><td>产品总监：</td><td>张全齐</td></tr><!-- Product Director-->
+<tr><td>研发工程师：</td><td>张冬、梁文慧、罗祥云</td></tr><!--development Engineers -->
+<tr><td>研发经理：</td><td>闫海钦</td></tr><!--development manager-->
+<tr><td>技术总监：</td><td>闫海钦</td></tr><!--Technical Director-->
+<tr><td>测试工程师：</td><td>兰国良、冯玉龙</td></tr><!--test engineer-->
+<tr><td>测试经理：</td><td>黄乐敏</td></tr><!--test manager-->
+<tr><td>运维工程师：</td><td>王玥</td></tr><!--Operation Engineer-->
+<tr><td>运维主管：</td><td>王玥</td></tr><!--Operation manager -->
+<tr><td>修复内容：</td><td><!--repair text 0-->
+</td></tr>
+<tr><td>发布报告：</td><td><!--report 0 -->
+</td></tr>
+</table>
+</body>
+</html>
